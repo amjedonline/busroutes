@@ -24,6 +24,14 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!-- end::actuator[] -->
+        
+        <dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>19.0</version>
+		</dependency>
+        
+        
         <!-- tag::tests[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
