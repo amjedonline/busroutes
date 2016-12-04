@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.goeuro.busroutes.services.BusrouteService;
+import com.goeuro.busroutes.services.BusrouteServiceImpl;
 import com.google.common.collect.ImmutableList;
 
 @RunWith(SpringRunner.class)

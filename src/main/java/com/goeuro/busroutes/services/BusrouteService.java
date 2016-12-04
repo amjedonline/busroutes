@@ -1,4 +1,4 @@
-package com.goeuro.busroutes;
+package com.goeuro.busroutes.services;
 
 import java.util.List;
 
