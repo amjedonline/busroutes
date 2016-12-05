@@ -15,6 +15,7 @@ import com.goeuro.busroutes.ws.BusroutesRestService;
 public class JerseyConfiguration extends ResourceConfig {
 	public JerseyConfiguration() {
 
+		// Register the REST services 
 		register(BusroutesRestService.class);
 
 	}

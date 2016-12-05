@@ -15,6 +15,15 @@ import com.goeuro.busroutes.services.BusrouteService;
 import com.goeuro.busroutes.services.RoutesFileReader;
 
 @Component
+/**
+ * 
+ * @author Mohammed Amjed
+ * 
+ * Initializes the application depending on the active profile.
+ * Test environment get the routes loaded from the routes.txt file in src/test/resources directory.
+ * While in the production environment we expect file path pointing to the routes we are interested in.  
+ *
+ */
 public class ApplicationRunner implements CommandLineRunner {
 
 	@Autowired

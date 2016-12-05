@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(Include.NON_NULL)
+/**
+ * Response model for Rest service.
+ * @author Mohammed Amjed
+ *
+ */
 public class BusrouteResponse {
 
 	@JsonProperty(value = "dep_sid")

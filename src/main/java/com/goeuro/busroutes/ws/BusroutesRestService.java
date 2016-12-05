@@ -33,6 +33,7 @@ public class BusroutesRestService {
 	public Response direct(@QueryParam("dep_sid") final String source,
 			@QueryParam("arr_sid") final String destination) {
 
+		// Source and destinations are mandatory params
 		if (StringUtils.isEmpty(source) || StringUtils.isEmpty(destination)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
