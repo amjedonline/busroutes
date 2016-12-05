@@ -6,9 +6,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.goeuro.busroutes.services.BusrouteResponse;
 import com.goeuro.busroutes.services.BusrouteService;
@@ -30,6 +32,10 @@ public class BusroutesRestService {
 	@Path("/direct")
 	public Response direct(@QueryParam("dep_sid") final String source,
 			@QueryParam("arr_sid") final String destination) {
+
+		if (StringUtils.isEmpty(source) || StringUtils.isEmpty(destination)) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
 
 		final BusrouteResponse response = new BusrouteResponse();
 		response.setSource(source);

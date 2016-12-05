@@ -1,13 +1,17 @@
 package com.goeuro.busroutes;
 
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import com.goeuro.busroutes.services.BusrouteResponse;
@@ -17,10 +21,25 @@ import com.goeuro.busroutes.services.BusrouteResponse;
 @ActiveProfiles("test")
 public class BusroutesRestServiceIT {
 
-	private RestTemplate restTemplate = new RestTemplate();
+	private RestTemplate restTemplate;
+
+	public BusroutesRestServiceIT() {
+
+		restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
+			protected boolean hasError(org.springframework.http.HttpStatus statusCode) {
+				return false;
+			}
+
+			@Override
+			public boolean hasError(ClientHttpResponse response) throws IOException {
+				return false;
+			}
+		});
+	}
 
 	@Test
-	public void testDirect() {
+	public void testDirectRouteNotAvailable() {
 		final ResponseEntity<BusrouteResponse> entity = restTemplate
 				.getForEntity("http://localhost:8080/api/direct?dep_sid=3&arr_sid=6", BusrouteResponse.class);
 
@@ -28,5 +47,42 @@ public class BusroutesRestServiceIT {
 
 		final BusrouteResponse response = entity.getBody();
 		Assert.assertFalse(response.isDirectBusRoute());
+	}
+
+	@Test
+	public void testDirectRouteAvailable() {
+		final ResponseEntity<BusrouteResponse> entity = restTemplate
+				.getForEntity("http://localhost:8080/api/direct?dep_sid=153&arr_sid=12", BusrouteResponse.class);
+
+		Assert.assertTrue(entity.getStatusCode().is2xxSuccessful());
+
+		final BusrouteResponse response = entity.getBody();
+		Assert.assertTrue(response.isDirectBusRoute());
+	}
+
+	@Test
+	public void testForSourceNotGiven() {
+		final ResponseEntity<BusrouteResponse> entity = restTemplate
+				.getForEntity("http://localhost:8080/api/direct?dep_sid=&arr_sid=12", BusrouteResponse.class);
+
+		Assert.assertTrue(entity.getStatusCode().is4xxClientError());
+
+	}
+
+	@Test
+	public void testForDestinationNotGiven() {
+		final ResponseEntity<BusrouteResponse> entity = restTemplate
+				.getForEntity("http://localhost:8080/api/direct?dep_sid=153&arr_sid=", BusrouteResponse.class);
+
+		Assert.assertTrue(entity.getStatusCode().is4xxClientError());
+	}
+
+	@Test
+	public void testForParamsAbsent() {
+		final ResponseEntity<BusrouteResponse> entity = restTemplate
+				.getForEntity("http://localhost:8080/api/direct?dep_sid=&arr_sid=", BusrouteResponse.class);
+
+		Assert.assertTrue(entity.getStatusCode().is4xxClientError());
+
 	}
 }
