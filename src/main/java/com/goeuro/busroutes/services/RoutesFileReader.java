@@ -2,7 +2,6 @@ package com.goeuro.busroutes.services;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -18,17 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RoutesFileReader {
 
-	public Map<String, List<String>> getRoutesFromClasspath(final String classPathResource) {
-		final URL url = Thread.currentThread().getContextClassLoader().getResource(classPathResource);
-		if (url == null) {
-			throw new RuntimeException("Cannot find resource on classpath: ");
-		}
-
-		final String fileName = url.getFile();
-		return getRoutesFromAbsolutePath(fileName);
-	}
-
-	public Map<String, List<String>> getRoutesFromAbsolutePath(final String fileName) {
+	public Map<String, List<String>> getRoutesFrom(final String fileName) {
 
 		List<String> list = new ArrayList<>();
 
