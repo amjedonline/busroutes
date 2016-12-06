@@ -31,7 +31,7 @@ public class BusrouteServiceImpl implements BusrouteService {
 
 				// Does the route have src and dest stations
 				final List<String> stations = route.stream()
-						.filter(stationId -> (src.equalsIgnoreCase(stationId) || dest.equalsIgnoreCase(stationId)))
+						.filter(stationId -> src.equalsIgnoreCase(stationId) || dest.equalsIgnoreCase(stationId))
 						.collect(Collectors.toList());
 
 				// check for the order

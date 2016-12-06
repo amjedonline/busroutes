@@ -1,3 +1,4 @@
+
 package com.goeuro.busroutes.services;
 
 import java.io.BufferedReader;
@@ -31,7 +32,7 @@ public class RoutesFileReader {
 			}
 
 			int count = Integer.valueOf(list.get(0));
-			if (count != (list.size() - 1)) {
+			if (count != list.size() - 1) {
 				throw new RuntimeException("Routes file is not valid.");
 			}
 
