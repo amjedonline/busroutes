@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,18 +19,16 @@ public class RoutesFileReader {
 
 	public Map<String, List<String>> getRoutesFrom(final String fileName) {
 
-		List<String> list = new ArrayList<>();
-
 		try (BufferedReader br = Files.newBufferedReader(Paths.get(fileName))) {
 
 			// br returns as stream and convert it into a List
-			list = br.lines().collect(Collectors.toList());
+			final List<String> list = br.lines().collect(Collectors.toList());
 
 			if (list.size() < 2) {
 				throw new RuntimeException("Routes file is not valid.");
 			}
 
-			int count = Integer.valueOf(list.get(0));
+			final int count = Integer.parseInt(list.get(0));
 			if (count != list.size() - 1) {
 				throw new RuntimeException("Routes file is not valid.");
 			}
